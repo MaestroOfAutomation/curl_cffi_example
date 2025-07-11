@@ -1,0 +1,5 @@
+requests==2.32.4
+httpx==0.28.1
+aiohttp==3.12.13
+curl_cffi==0.12.0b1
+playwright==1.53.0
