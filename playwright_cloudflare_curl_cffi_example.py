@@ -3,14 +3,16 @@ from time import monotonic
 from playwright.async_api import async_playwright
 from curl_cffi import AsyncSession
 
-URL = "https://telescan-group.ru"
+URL = "https://dexscreener.com"
 
 async def handle(route, request):
     print(f"Получен запрос {request.url}")
     t = monotonic()
-    async with AsyncSession(impersonate="safari") as session:
+
+    async with AsyncSession(impersonate="chrome") as session:
         r = await session.get(request.url)
-    print(f"Выполняю запрос через curl_cffi, получен ответ {r.status_code}, {r.text[:128]!r}")
+        print(f"Выполнил запрос через curl_cffi, получен ответ {r.status_code}, {r.text[:128]!r}")
+
     await route.fulfill(status=r.status_code, headers=dict(r.headers), body=r.content)
     print(f"Fulfil за {monotonic() - t:.2f}с")
 
